@@ -11,10 +11,10 @@ interface CurrencyAPI {
     suspend fun getRates(@Query("base") base: String): Response<CurrencyApiResponse>
 
     @GET("timeseries")
-    suspend fun getDataRates(
+    suspend fun getAllData(
         @Query("start_date") startData: String,
         @Query("end_date") endDate: String,
         @Query("base")base: String
-    ): Response<CurrencyApiResponse>
+    ): Response<HistoricApiResponse>
 
 }

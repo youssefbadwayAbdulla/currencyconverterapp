@@ -6,9 +6,13 @@ import com.example.currencyconverterapp.data.local.CurrencyDatabase
 import com.example.currencyconverterapp.data.mapper.mapToEntityList
 import com.example.currencyconverterapp.data.remote.CurrencyAPI
 import com.example.currencyconverterapp.data.response.CurrencyApiResponse
+import com.example.currencyconverterapp.data.response.HistoricApiResponse
 import com.example.currencyconverterapp.domain.data_interface.CurrencyRemoteRepository
+import com.example.currencyconverterapp.presentaton.utils.DateUtils.Companion.getEndDate
+import com.example.currencyconverterapp.presentaton.utils.DateUtils.Companion.getStartDate
 import com.example.currencyconverterapp.presentaton.utils.Resource
 import com.google.gson.Gson
+import retrofit2.Response
 
 class CurrencyRemoteIMP(
     private val api: CurrencyAPI,
@@ -34,23 +38,8 @@ class CurrencyRemoteIMP(
         }
     }
 
-    override suspend fun getDataRates(
-        startData: String,
-        endDate: String,
-        base: String
-    ): Resource<CurrencyApiResponse> {
-        return try {
-            val response = api.getDataRates(startData, endDate, base)
-            val result = response.body()
-            if (result != null) {
-                Resource.Success(result)
-            } else {
-                Resource.Error(response.message())
-            }
-        } catch (e: Exception) {
-            Log.v("DataResult", e.message.toString())
-
-            Resource.Error(e.message ?: "An error ")
-        }
+    override suspend fun getAllData(base: String): Response<HistoricApiResponse> {
+        return api.getAllData(getStartDate(), getEndDate(),base)
     }
+
 }

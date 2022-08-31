@@ -21,8 +21,6 @@ class CurrencyApplication : Application(), KoinComponent {
                     repositoryModel,
                     serviceAPIModule,
                     databaseModel
-
-
                 )
             )
         }

@@ -70,12 +70,6 @@ data class Rates(
     @SerializedName("ZAR")
     val zAR: Double,
 ) {
-//    companion object {
-////        fun from(flag: String): Double {
-////
-////        }
-//    }
-
     fun getRates(): List<CurrencyModel> = listOf(
         CurrencyModel("AUD", aUD.toFloat()),
         CurrencyModel("BGN", bGN.toFloat()),
@@ -114,5 +108,6 @@ data class Rates(
         CurrencyModel("ZAR", zAR.toFloat()),
 
         )
+
 }
 

@@ -6,13 +6,7 @@ import java.util.*
 
 class DateUtils {
     companion object{
-//        fun getEndDate(): String {
-//            return LocalDate.now().toString()
-//        }
-//
-//        fun getStartDate(): String {
-//            return LocalDate.now().minusDays(30).toString()
-//        }
+
         fun getStartDate(): String {
             return SimpleDateFormat("yyyy-MM-dd").format(Date())
         }

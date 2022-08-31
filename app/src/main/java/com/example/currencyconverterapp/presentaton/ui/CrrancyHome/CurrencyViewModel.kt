@@ -8,21 +8,29 @@ import androidx.lifecycle.viewModelScope
 import com.example.currencyconverterapp.data.response.CurrencyApiResponse
 import com.example.currencyconverterapp.data.response.Rates
 import com.example.currencyconverterapp.domain.model.CurrencyModel
+import com.example.currencyconverterapp.domain.usecase.LocalDayUseCase
+import com.example.currencyconverterapp.domain.usecase.LocalWeekUseCase
 import com.example.currencyconverterapp.domain.usecase.RemoteCurrencyUseCase
 import com.example.currencyconverterapp.presentaton.utils.Resource
 import com.example.currencyconverterapp.presentaton.utils.Resource.Error
 import com.example.currencyconverterapp.presentaton.utils.Resource.Success
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlin.math.round
 
 
 class CurrencyViewModel(
-    private val currencyUseCase: RemoteCurrencyUseCase
+    private val currencyUseCase: RemoteCurrencyUseCase,
+    private val localDayUseCase: LocalDayUseCase,
+    private val localWeekUseCase: LocalWeekUseCase
 
 ) : ViewModel() {
     private val _currencyEvent = MutableLiveData<CurrencyEvent<String>>(CurrencyEvent.Empty())
     val currencyEvent: LiveData<CurrencyEvent<String>> = _currencyEvent
+
+    private val currencyMutableList = MutableLiveData<List<CurrencyModel>>()
+    val currencyLiveData: LiveData<List<CurrencyModel>> get() = currencyMutableList
 
 //    //Local Database Room
 //    private var currencyMutableLiveData = MutableLiveData<List<CurrencyEntity>>()
@@ -41,7 +49,17 @@ class CurrencyViewModel(
     }
 
 
+    fun getDataDay() = viewModelScope.launch {
+        val result = withContext(Dispatchers.IO) { localDayUseCase() }
+        Log.d("viewModel", "$result")
+        currencyMutableList.postValue(result)
+    }
 
+    fun getDataWeekAndSaved() = viewModelScope.launch {
+        val result = withContext(Dispatchers.IO) { localWeekUseCase() }
+        Log.d("viewModel", "$result")
+        currencyMutableList.postValue(result)
+    }
 
     private fun collectGetRates(
         amountString: String,
@@ -122,3 +140,5 @@ class CurrencyViewModel(
     }
 
 }
+
+

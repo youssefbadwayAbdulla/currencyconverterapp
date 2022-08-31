@@ -44,4 +44,6 @@
     <string name="amount">Amount</string>
     <string name="convert">Convert</string>
     <string name="currency_converter">Currency Converter</string>
+    <string name="view_currency_today">view_currency_today</string>
+    <string name="view_currency_week">view_currency_week</string>
 </resources>

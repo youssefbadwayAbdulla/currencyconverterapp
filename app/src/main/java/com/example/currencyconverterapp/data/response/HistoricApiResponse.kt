@@ -8,7 +8,8 @@ data class HistoricApiResponse(
     @SerializedName("end_date")
     val endAt: String,
     @SerializedName("rates")
-    val rates: Map<String, Map<String, Double>>,
+//    val rates: Map<String, Map<String, Double>>,
+    val rates: Rates,
     @SerializedName("start_date")
     val startAt: String
 )

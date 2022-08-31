@@ -16,4 +16,11 @@ interface CurrencyDao {
 
     @Query("DELETE FROM currency_entity")
     suspend fun deleteAllDataFromDatabase()
+
+    @Query("SELECT * FROM  currency_entity WHERE startAt == :today ORDER by startAt ASC ")
+    suspend fun getCurrencyToday(today:String):List<CurrencyEntity>
+
+
+    @Query("SELECT * FROM currency_entity WHERE endAt <= :week ORDER by endAt ASC")
+    suspend fun getWeekAsteroids(week: String) :List<CurrencyEntity>
 }

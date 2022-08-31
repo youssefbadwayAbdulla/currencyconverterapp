@@ -5,9 +5,13 @@ import android.util.Log
 import androidx.room.Room
 import com.example.currencyconverterapp.data.local.CurrencyDatabase
 import com.example.currencyconverterapp.data.remote.CurrencyAPI
+import com.example.currencyconverterapp.data.repositories.CurrencyLocalIMP
 import com.example.currencyconverterapp.data.repositories.CurrencyRemoteIMP
+import com.example.currencyconverterapp.domain.data_interface.CurrencyLocalRepository
 
 import com.example.currencyconverterapp.domain.data_interface.CurrencyRemoteRepository
+import com.example.currencyconverterapp.domain.usecase.LocalDayUseCase
+import com.example.currencyconverterapp.domain.usecase.LocalWeekUseCase
 import com.example.currencyconverterapp.domain.usecase.RemoteCurrencyUseCase
 import com.example.currencyconverterapp.presentaton.ui.CrrancyHome.CurrencyViewModel
 
@@ -25,16 +29,19 @@ private const val BASE_URL = "https://api.exchangerate.host/"
 
 val viewModelModule = module {
     viewModel { CurrencyViewModel(
-      currencyUseCase = get()
-
+      currencyUseCase = get(),
+        localDayUseCase = get(),
+        localWeekUseCase = get()
     ) }
 }
 
 
 val repositoryModel: Module = module {
     single<CurrencyRemoteRepository> { CurrencyRemoteIMP(api = get(), currencyDatabase = get()) }
-
-    single { RemoteCurrencyUseCase(currencyRemoteRepository = get()) }
+    single<CurrencyLocalRepository> { CurrencyLocalIMP(currencyDatabase = get()) }
+    single { RemoteCurrencyUseCase(currencyRemoteRepository = get(), currencyLocalRepository = get()) }
+    single { LocalDayUseCase(currencyLocalRepository = get()) }
+    single { LocalWeekUseCase(currencyLocalRepository = get()) }
 
 }
 
