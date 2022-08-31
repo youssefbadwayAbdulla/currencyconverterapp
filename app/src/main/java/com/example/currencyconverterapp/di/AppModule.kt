@@ -1,13 +1,19 @@
 package com.example.currencyconverterapp.di
 
+import android.app.Application
 import android.util.Log
+import androidx.room.Room
+import com.example.currencyconverterapp.data.local.CurrencyDatabase
 import com.example.currencyconverterapp.data.remote.CurrencyAPI
 import com.example.currencyconverterapp.data.repositories.CurrencyRemoteIMP
-import com.example.currencyconverterapp.domain.data_interface.CurrencyRemote
-import com.example.currencyconverterapp.domain.usecase.CurrencyUseCase
+
+import com.example.currencyconverterapp.domain.data_interface.CurrencyRemoteRepository
+import com.example.currencyconverterapp.domain.usecase.RemoteCurrencyUseCase
 import com.example.currencyconverterapp.presentaton.ui.CrrancyHome.CurrencyViewModel
+
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -20,13 +26,16 @@ private const val BASE_URL = "https://api.exchangerate.host/"
 val viewModelModule = module {
     viewModel { CurrencyViewModel(
       currencyUseCase = get()
+
     ) }
 }
 
 
 val repositoryModel: Module = module {
-    single<CurrencyRemote> { CurrencyRemoteIMP(api = get()) }
-    single { CurrencyUseCase(currencyRemote = get()) }
+    single<CurrencyRemoteRepository> { CurrencyRemoteIMP(api = get(), currencyDatabase = get()) }
+
+    single { RemoteCurrencyUseCase(currencyRemoteRepository = get()) }
+
 }
 
 // this part is Retrofit API.....................
@@ -56,4 +65,16 @@ val serviceAPIModule: Module = module {
         return retrofit.create(CurrencyAPI::class.java)
     }
     single { getAPIServicesInstance(retrofit = get()) }
+}
+
+
+//this part is database.............
+val databaseModel: Module = module {
+    fun getDatabaseInstance(application: Application): CurrencyDatabase {
+        return Room.databaseBuilder(
+            application,
+           CurrencyDatabase::class.java, "user_database"
+        ).fallbackToDestructiveMigration().build()
+    }
+    single { getDatabaseInstance(androidApplication()) }
 }

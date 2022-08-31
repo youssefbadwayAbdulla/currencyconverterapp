@@ -1,6 +1,7 @@
 package com.example.currencyconverterapp
 
 import android.app.Application
+import com.example.currencyconverterapp.di.databaseModel
 import com.example.currencyconverterapp.di.repositoryModel
 import com.example.currencyconverterapp.di.serviceAPIModule
 import com.example.currencyconverterapp.di.viewModelModule
@@ -19,6 +20,7 @@ class CurrencyApplication : Application(), KoinComponent {
                     viewModelModule,
                     repositoryModel,
                     serviceAPIModule,
+                    databaseModel
 
 
                 )

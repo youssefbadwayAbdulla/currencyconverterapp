@@ -9,7 +9,7 @@
         android:id="@+id/currencyConverterFragment"
         android:name="com.example.currencyconverterapp.presentaton.ui.CrrancyHome.CurrencyConverterFragment"
         android:label="fragment_currency_converter"
-        tools:layout="@layout/fragment_currency_converter" >
+        tools:layout="@layout/fragment_currency_converter">
         <action
             android:id="@+id/action_currencyConverterFragment_to_currencyDetailsFragment"
             app:destination="@id/currencyDetailsFragment" />
@@ -18,9 +18,12 @@
         android:id="@+id/currencyDetailsFragment"
         android:name="com.example.currencyconverterapp.presentaton.ui.currencydetails.CurrencyDetailsFragment"
         android:label="fragment_currency_details"
-        tools:layout="@layout/fragment_currency_details" >
+        tools:layout="@layout/fragment_currency_details">
         <action
             android:id="@+id/action_currencyDetailsFragment_to_currencyConverterFragment"
             app:destination="@id/currencyConverterFragment" />
+        <argument
+            android:name="data"
+            app:argType="com.example.currencyconverterapp.domain.model.CurrencyModel" />
     </fragment>
 </navigation>

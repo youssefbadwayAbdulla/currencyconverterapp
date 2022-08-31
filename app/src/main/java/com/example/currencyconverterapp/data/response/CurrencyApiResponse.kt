@@ -1,8 +1,8 @@
 package com.example.currencyconverterapp.data.response
 
 data class CurrencyApiResponse(
-    val base: String,
-    val date: String,
+    val base: String?=null,
+    val date: String?=null,
     val rates: Rates,
 
 //

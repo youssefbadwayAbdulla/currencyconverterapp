@@ -1,7 +1,7 @@
 package com.example.currencyconverterapp.data.response
 
+import com.example.currencyconverterapp.domain.model.CurrencyModel
 import com.google.gson.annotations.SerializedName
-
 data class Rates(
     @SerializedName("AUD")
     val aUD: Double,
@@ -68,5 +68,51 @@ data class Rates(
     @SerializedName("USD")
     val uSD: Double,
     @SerializedName("ZAR")
-    val zAR: Double
-)
+    val zAR: Double,
+) {
+//    companion object {
+////        fun from(flag: String): Double {
+////
+////        }
+//    }
+
+    fun getRates(): List<CurrencyModel> = listOf(
+        CurrencyModel("AUD", aUD.toFloat()),
+        CurrencyModel("BGN", bGN.toFloat()),
+        CurrencyModel("EUR", eUR.toFloat()),
+        CurrencyModel("BRL", bRL.toFloat()),
+        CurrencyModel("CAD", cAD.toFloat()),
+        CurrencyModel("CHF", cHF.toFloat()),
+        CurrencyModel("CNY", cNY.toFloat()),
+        CurrencyModel("CZK", cZK.toFloat()),
+        CurrencyModel("DKK", dKK.toFloat()),
+        CurrencyModel("GBP", gBP.toFloat()),
+        CurrencyModel("HKD", hKD.toFloat()),
+        CurrencyModel("HRK", hRK.toFloat()),
+        CurrencyModel("HUF", hUF.toFloat()),
+        CurrencyModel("IDR", iDR.toFloat()),
+        CurrencyModel("ILS", iLS.toFloat()),
+        CurrencyModel("INR", iNR.toFloat()),
+        CurrencyModel("ISK", iSK.toFloat()),
+        CurrencyModel("JPY", jPY.toFloat()),
+        CurrencyModel("KRW", kRW.toFloat()),
+        CurrencyModel("MXN", mXN.toFloat()),
+        CurrencyModel("MYR", mYR.toFloat()),
+        CurrencyModel("IDR", iDR.toFloat()),
+        CurrencyModel("NOK", nOK.toFloat()),
+        CurrencyModel("INR", iNR.toFloat()),
+        CurrencyModel("NZD", nZD.toFloat()),
+        CurrencyModel("PHP", pHP.toFloat()),
+        CurrencyModel("PLN", pLN.toFloat()),
+        CurrencyModel("RON", rON.toFloat()),
+        CurrencyModel("RUB", rUB.toFloat()),
+        CurrencyModel("SEK", sEK.toFloat()),
+        CurrencyModel("SGD", sGD.toFloat()),
+        CurrencyModel("THB", tHB.toFloat()),
+        CurrencyModel("TRY", tRY.toFloat()),
+        CurrencyModel("USD", uSD.toFloat()),
+        CurrencyModel("ZAR", zAR.toFloat()),
+
+        )
+}
+
